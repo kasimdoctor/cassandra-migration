@@ -6,18 +6,14 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.expedia.content.migration.cassandra.exceptions.RollbackUnsuccessfulException;
-import com.expedia.content.migration.cassandra.operations.CassandraOperation;
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
-import com.expedia.content.migration.cassandra.operations.ResultType;
-import com.expedia.content.migration.cassandra.util.CassandraDao;
-import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import com.expedia.content.migration.cassandra.exceptions.RollbackUnsuccessfulException;
+import com.expedia.content.migration.cassandra.util.CassandraDao;
+import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
 
 public class CassandraOperationTest {
 

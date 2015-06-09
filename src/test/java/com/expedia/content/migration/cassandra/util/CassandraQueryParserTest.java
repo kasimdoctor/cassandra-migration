@@ -9,10 +9,6 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
-import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +16,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+
+import com.expedia.content.migration.cassandra.operations.OperationType;
+import com.expedia.content.migration.cassandra.operations.QueryCommand;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CassandraQueryParserTest {
