@@ -17,4 +17,4 @@ The application is an executable jar (a Spring boot app) which can be downloaded
 
 You will need a structure similar to the following if you use Ansible
 
-![Alt text](/docs/ansible_structure.png?raw=true "Optional Title")
+![Ansible](/docs/ansible_structure.PNG? "Optional Title")
