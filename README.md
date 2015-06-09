@@ -14,3 +14,5 @@ The application is an executable jar (a Spring boot app) which can be downloaded
 
 
 #### Ansible Template to deploy Cassandra Migration
+
+You will need 
