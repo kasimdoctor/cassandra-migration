@@ -47,3 +47,19 @@ cassandraMigrationMaxMemory: 256m
 instanceName: "{{ cassandraMigrationInstanceName }}"
 
 ```
+
+* This is the main.yml file from the <i>meta</i> folder :
+
+```
+---
+# Roles that should be installed prior to the current one
+dependencies:
+  - java
+
+```
+
+From the above yml file, it is important to note that the cassandra-migration jar only depends on Java and thus no other prerequisites are needed.
+
+
+
+
