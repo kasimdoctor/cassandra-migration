@@ -108,7 +108,8 @@ From the above yml file, it is important to note that the cassandra-migration ja
 
 ```
 
-
+  
+  
 * Finally, copy the following application.properties file verbatim and put it under the templates or equivalent folder.  
   <b>N.B :</b> Make sure you have the variables used below i,e.(<i>cassandra_cluster_ips</i> etc.) defined somewhere in your                   project.
 
