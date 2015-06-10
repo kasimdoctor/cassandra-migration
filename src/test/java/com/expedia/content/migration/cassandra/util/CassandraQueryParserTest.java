@@ -2,12 +2,14 @@ package com.expedia.content.migration.cassandra.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.expedia.content.migration.cassandra.operations.OperationType;
+import com.expedia.content.migration.cassandra.operations.QueryCommand;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,16 +19,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
-
 @RunWith(MockitoJUnitRunner.class)
 public class CassandraQueryParserTest {
 
     private static final OperationType MIGRATION = OperationType.MIGRATION;
-    private static final OperationType ROLLBACK = OperationType.ROLLBACK;
-    private static final String MIGRATION_FILE = "classpath:migration.cql";
-    private static final String ROLLBACK_FILE = "classpath:rollback.cql";
 
     private CassandraQueryParser queryParser;
 
@@ -44,24 +40,12 @@ public class CassandraQueryParserTest {
     }
 
     @Test
-    public void testGetQueryOperationsMigrationPath() throws IOException {
+    public void testGetQueryOperations() throws IOException {
         when(resource.getInputStream()).thenReturn(inputStream);
 
         QueryCommand queries = queryParser.getQueryOperations(MIGRATION);
 
-        verify(loader).getResource(MIGRATION_FILE);
-        verify(loader, never()).getResource(ROLLBACK_FILE);
-        assertThat(queries).isNotNull();
-    }
-
-    @Test
-    public void testGetQueryOperationsRollbackPath() throws IOException {
-        when(resource.getInputStream()).thenReturn(inputStream);
-
-        QueryCommand queries = queryParser.getQueryOperations(ROLLBACK);
-
-        verify(loader).getResource(ROLLBACK_FILE);
-        verify(loader, never()).getResource(MIGRATION_FILE);
+        verify(loader).getResource(any(String.class));
         assertThat(queries).isNotNull();
     }
 

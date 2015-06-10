@@ -1,19 +1,20 @@
 package com.expedia.content.migration.cassandra.operations;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.expedia.content.migration.cassandra.util.CassandraDao;
+import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import com.expedia.content.migration.cassandra.exceptions.RollbackUnsuccessfulException;
-import com.expedia.content.migration.cassandra.util.CassandraDao;
-import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
 
 public class CassandraOperationTest {
 
@@ -37,49 +38,33 @@ public class CassandraOperationTest {
     }
 
     @Test
-    public void testPerformMigrationSuccessPath() throws IOException {
-
+    public void testPerformMigration() throws IOException {
         when(queryParser.getQueryOperations(MIGRATION)).thenReturn(queries);
         when(cassandraDao.executeQueryCommand(queries, MIGRATION)).thenReturn(ResultType.SUCCESS);
 
-        cassandraOperation.performMigration();
+        ResultType result = cassandraOperation.performMigration();
 
         verify(queryParser).getQueryOperations(MIGRATION);
         verify(cassandraDao).executeQueryCommand(queries, MIGRATION);
+        assertThat(result).isEqualTo(ResultType.SUCCESS);
+
+        verify(queryParser, never()).getQueryOperations(ROLLBACK);
+        verify(cassandraDao, never()).executeQueryCommand(queries, ROLLBACK);
     }
 
     @Test
-    public void testPerformMigrationFailurePath() throws IOException {
-
-        when(queryParser.getQueryOperations(MIGRATION)).thenReturn(queries);
+    public void testPerformRollback() throws IOException {
         when(queryParser.getQueryOperations(ROLLBACK)).thenReturn(queries);
-        when(cassandraDao.executeQueryCommand(queries, MIGRATION)).thenReturn(ResultType.FAILURE);
-        when(cassandraDao.executeQueryCommand(queries, ROLLBACK)).thenReturn(ResultType.SUCCESS);
-
-        cassandraOperation.performMigration();
-
-        verify(queryParser).getQueryOperations(MIGRATION);
-        verify(cassandraDao).executeQueryCommand(queries, MIGRATION);
-
-        verify(queryParser).getQueryOperations(ROLLBACK);
-        verify(cassandraDao).executeQueryCommand(queries, ROLLBACK);
-    }
-
-    @Test(expected = RollbackUnsuccessfulException.class)
-    public void testPerformRollbackFailurePath() throws IOException {
-
-        when(queryParser.getQueryOperations(MIGRATION)).thenReturn(queries);
-        when(queryParser.getQueryOperations(ROLLBACK)).thenReturn(queries);
-        when(cassandraDao.executeQueryCommand(queries, MIGRATION)).thenReturn(ResultType.FAILURE);
         when(cassandraDao.executeQueryCommand(queries, ROLLBACK)).thenReturn(ResultType.FAILURE);
 
-        cassandraOperation.performMigration();
-
-        verify(queryParser).getQueryOperations(MIGRATION);
-        verify(cassandraDao).executeQueryCommand(queries, MIGRATION);
+        ResultType result = cassandraOperation.performRollback();
 
         verify(queryParser).getQueryOperations(ROLLBACK);
         verify(cassandraDao).executeQueryCommand(queries, ROLLBACK);
 
+        verify(queryParser, never()).getQueryOperations(MIGRATION);
+        verify(cassandraDao, never()).executeQueryCommand(queries, MIGRATION);
+        assertThat(result).isEqualTo(ResultType.FAILURE);
     }
+
 }

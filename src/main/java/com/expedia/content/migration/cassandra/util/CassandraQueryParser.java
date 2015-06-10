@@ -12,6 +12,7 @@ import com.expedia.content.migration.cassandra.operations.QueryCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
@@ -24,12 +25,16 @@ public class CassandraQueryParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CassandraQueryParser.class);
 
-    private static final String MIGRATION_FILE = "classpath:migration.cql";
-    private static final String ROLLBACK_FILE = "classpath:rollback.cql";
     private static final String SEMI_COLON = ";";
     private static final String SPACE = " ";
     private static final String BLOCK_COMMENT_START = "/*";
     private static final String BLOCK_COMMENT_END = "*/";
+
+    @Value("${migration.script}")
+    private String migrationFilePath;
+
+    @Value("${rollback.script}")
+    private String rollbackFilePath;
 
     private ResourceLoader loader;
 
@@ -52,12 +57,12 @@ public class CassandraQueryParser {
         switch (type) {
             case MIGRATION:
                 LOGGER.info("Starting to parse the migration query file.");
-                resource = loader.getResource(MIGRATION_FILE);
+                resource = loader.getResource("file:" + migrationFilePath);
                 break;
 
             case ROLLBACK:
                 LOGGER.info("Starting to parse the rollback query file.");
-                resource = loader.getResource(ROLLBACK_FILE);
+                resource = loader.getResource("file:" + rollbackFilePath);
                 break;
 
             default:

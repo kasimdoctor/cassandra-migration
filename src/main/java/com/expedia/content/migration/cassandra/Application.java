@@ -1,6 +1,8 @@
 package com.expedia.content.migration.cassandra;
 
+import com.expedia.content.migration.cassandra.exceptions.MigrationUnsuccessfulException;
 import com.expedia.content.migration.cassandra.operations.CassandraOperation;
+import com.expedia.content.migration.cassandra.operations.ResultType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,8 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
-    private ApplicationContext appContext; 
+    private ApplicationContext appContext;
+    private ResultType result;
 
     @Autowired
     private CassandraOperation cassandraOperation;
@@ -31,11 +34,14 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
         LOGGER.info("Starting the Cassandra Sitesup Operation.");
 
         try {
-            cassandraOperation.performMigration();
-        } finally {
-            SpringApplication.exit(appContext, cassandraOperation);
-        }
+            if (cassandraOperation.performMigration() == ResultType.FAILURE) {
+                result = cassandraOperation.performRollback();
+                throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
+            }
 
+        } finally {
+            SpringApplication.exit(appContext, result);
+        }
     }
 
     @Override

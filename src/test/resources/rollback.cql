@@ -2,4 +2,4 @@
 
 use LodgingDirectory;
 
-CREATE TABLE IF EXISTS SitesupTest;
+DROP TABLE IF EXISTS SitesupTest;
