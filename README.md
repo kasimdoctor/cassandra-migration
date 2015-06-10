@@ -30,7 +30,7 @@ cassandraMigrationArtifactFileName: '{{ cassandraMigrationInstanceName }}.jar'
 cassandraMigrationUser: 'tomcat'
 cassandraMigrationGroup: 'software'
 
-# NOTE: You can configure any paths you like for the application here. This is just an example. 
+# NOTE: You can configure any path you like for the BasePath here. This is just an example. 
 cassandraMigrationBasePath: '/opt/expedia' 
 cassandraMigrationInstanceName: 'cassandra-migration'
 cassandraMigrationAppPath: '{{ cassandraMigrationBasePath }}/{{ cassandraMigrationInstanceName }}'
