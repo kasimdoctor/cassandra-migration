@@ -23,7 +23,7 @@ The above screenshot is taken from the <b>[3rd-Party-Content-Acquisition](https:
 
 * This is the main.yml from under the <b><i>defaults</i></b> folder :
  
-```
+```yml
 cassandraMigrationJavaHome: '{{ javaHome }}'
 cassandraMigrationArtifactFileName: '{{ cassandraMigrationInstanceName }}.jar'
 
