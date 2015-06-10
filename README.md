@@ -129,7 +129,7 @@ rollback.script=
 ```  
 
 
-**In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.**
+**In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.**  
 
 
 
