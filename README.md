@@ -17,7 +17,7 @@ The application is an executable jar (a Spring boot app) which can be downloaded
 
 You will need a structure similar to the following if you use Ansible
 
-![Ansible](/docs/ansible_structure.PNG? "Optional Title")
+![Ansible](/docs/ansible_structure.PNG? "Ansible structure")
 
 The above screenshot is taken from 3rd-Party-Content-Acquisition repo and it shows a structure that is used to deploy the cassandra-migration.jar
 
@@ -30,6 +30,7 @@ cassandraMigrationArtifactFileName: '{{ cassandraMigrationInstanceName }}.jar'
 cassandraMigrationUser: 'tomcat'
 cassandraMigrationGroup: 'software'
 
+# NOTE: You can configure any paths you like for the application here. This is just an example. 
 cassandraMigrationBasePath: '/opt/expedia' 
 cassandraMigrationInstanceName: 'cassandra-migration'
 cassandraMigrationAppPath: '{{ cassandraMigrationBasePath }}/{{ cassandraMigrationInstanceName }}'
