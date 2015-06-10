@@ -19,9 +19,9 @@ You will need a structure similar to the following if you use Ansible
 
 ![Ansible](/docs/ansible_structure.PNG? "Ansible structure")
 
-The above screenshot is taken from 3rd-Party-Content-Acquisition repo and it shows a structure that is used to deploy the cassandra-migration.jar
+The above screenshot is taken from 3rd-Party-Content-Acquisition repo and it shows a structure that is used to deploy the cassandra-migration.jar  
 
-* This is the main.yml from under the <i>defaults</i> folder :
+* This is the main.yml from under the <b><i>defaults</i></b> folder :
  
 ```
 cassandraMigrationJavaHome: '{{ javaHome }}'
@@ -49,7 +49,7 @@ instanceName: "{{ cassandraMigrationInstanceName }}"
 
 ```
 
-* This is the main.yml file from the <i>meta</i> folder :
+* This is the main.yml file from the <b><i>meta</i></b> folder :
 
 ```
 ---
@@ -59,10 +59,10 @@ dependencies:
 
 ```
 
-From the above yml file, it is important to note that the cassandra-migration jar only depends on Java and thus no other prerequisites are needed.
+From the above yml file, it is important to note that the cassandra-migration jar only depends on Java and thus no other prerequisites are needed.  
 
 
-* This is the main.yml file from tasks folder :
+* This is the main.yml file from under the <b><i>tasks</i></b> folder :
 
 ```
 
@@ -107,7 +107,6 @@ From the above yml file, it is important to note that the cassandra-migration ja
   shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-Migration.jar --migration.script="PATH TO SCRIPTS" '
 
 ```
-
   
   
 * Finally, copy the following application.properties file verbatim and put it under the templates or equivalent folder.  
@@ -127,7 +126,7 @@ logging.config={{ cassandraMigrationConfigPath }}/logback.xml
 migration.script=
 rollback.script=
 
-```
+```  
 
 
 **In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.**
