@@ -19,7 +19,7 @@ You will need a structure similar to the following if you use Ansible
 
 ![Ansible](/docs/ansible_structure.PNG? "Ansible structure")
 
-The above screenshot is taken from 3rd-Party-Content-Acquisition repo and it shows a structure that is used to deploy the cassandra-migration.jar  
+The above screenshot is taken from the <b>[3rd-Party-Content-Acquisition](https://ewegithub.sb.karmalab.net/ContentSystems/3rdparty-content-acquisition)</b> repository and it shows a structure that is used to deploy the cassandra-migration.jar  
 
 * This is the main.yml from under the <b><i>defaults</i></b> folder :
  
