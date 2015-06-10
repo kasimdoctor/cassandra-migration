@@ -51,7 +51,7 @@ instanceName: "{{ cassandraMigrationInstanceName }}"
 
 * This is the main.yml file from the <b><i>meta</i></b> folder :
 
-```
+```yml
 ---
 # Roles that should be installed prior to the current one
 dependencies:
@@ -64,7 +64,7 @@ From the above yml file, it is important to note that the cassandra-migration ja
 
 * This is the main.yml file from under the <b><i>tasks</i></b> folder :
 
-```
+```yml
 
 ---
 # This role installs the Cassandra-Migration module
@@ -112,7 +112,7 @@ From the above yml file, it is important to note that the cassandra-migration ja
 * Finally, copy the following application.properties file verbatim and put it under the templates or equivalent folder.  
   <b>N.B :</b> Make sure you have the variables used below i,e.(<i>cassandra_cluster_ips</i> etc.) defined somewhere in your                   project.
 
-```
+```yaml
 
 [Cassandra]
 cassandra.cluster.ips={{ cassandra_cluster_ips }}
