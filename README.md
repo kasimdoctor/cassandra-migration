@@ -132,10 +132,7 @@ rollback.script=
 **In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.**  
 
 
-
-
-
-**Ansible for Dummies**
+**Ansible for Dummies :**
 
 * [Creating Ansible Roles](http://www.azavea.com/blogs/labs/2014/10/creating-ansible-roles-from-scratch-part-1/)
 * [YAML Syntax](https://docs.ansible.com/YAMLSyntax.html)
