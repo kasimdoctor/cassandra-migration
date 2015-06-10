@@ -57,7 +57,7 @@ public class CassandraDao {
 
     private void logQueryTrace(ExecutionInfo execInfo) {
         QueryTrace trace = execInfo.getQueryTrace();
-        LOGGER.debug("Cassandra query with trace UUID={} started at startTime={} with requestType={}", trace.getTraceId(), trace.getStartedAt(),
+        LOGGER.info("Cassandra query with trace UUID={} started at startTime={} with requestType={}", trace.getTraceId(), trace.getStartedAt(),
                 trace.getRequestType());
     }
 }

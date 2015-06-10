@@ -69,13 +69,11 @@ public class CassandraQueryParser {
     }
 
     private List<String> parseCassandraQueryFile(Resource resource) throws IOException {
-
         List<String> queries = new ArrayList<>();
-        StringBuffer query = new StringBuffer();
+        StringBuilder query = new StringBuilder();
 
         InputStream inputStream = resource.getInputStream();
         try (Scanner scanner = new Scanner(inputStream)) {
-
             String line;
             boolean commentFlag = false;
             while (scanner.hasNext()) {
@@ -96,12 +94,10 @@ public class CassandraQueryParser {
                     } else {
                         query.append(line);
                         queries.add(query.toString());
-                        query = new StringBuffer();
+                        query = new StringBuilder();
                     }
                 }
-
             }
-
         }
 
         return queries;

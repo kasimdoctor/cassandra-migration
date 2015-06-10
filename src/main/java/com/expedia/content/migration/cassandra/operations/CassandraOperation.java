@@ -17,9 +17,6 @@ public class CassandraOperation implements ExitCodeGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CassandraOperation.class);
 
-    private static OperationType operation;
-    private static ResultType result;
-
     private CassandraQueryParser queryParser;
     private CassandraDao cassandraDao;
 
@@ -38,14 +35,10 @@ public class CassandraOperation implements ExitCodeGenerator {
     public void performMigration() throws IOException {
         LOGGER.info("Performing migration operation.");
 
-        operation = OperationType.MIGRATION;
-        QueryCommand queries = queryParser.getQueryOperations(operation);
-        result = cassandraDao.executeQueryCommand(queries, operation);
-
-        if (result == ResultType.FAILURE) {
+        QueryCommand queries = queryParser.getQueryOperations(OperationType.MIGRATION);
+        if (cassandraDao.executeQueryCommand(queries, OperationType.MIGRATION) == ResultType.FAILURE) {
             performRollback();
         }
-
     }
 
     /**
@@ -57,14 +50,10 @@ public class CassandraOperation implements ExitCodeGenerator {
     public void performRollback() throws IOException {
         LOGGER.info("Performing rollback operation.");
 
-        operation = OperationType.ROLLBACK;
-        QueryCommand queries = queryParser.getQueryOperations(operation);
-        result = cassandraDao.executeQueryCommand(queries, operation);
-
-        if (result == ResultType.FAILURE) {
+        QueryCommand queries = queryParser.getQueryOperations(OperationType.ROLLBACK);
+        if (cassandraDao.executeQueryCommand(queries, OperationType.ROLLBACK) == ResultType.FAILURE) {
             throw new RollbackUnsuccessfulException();
         }
-
     }
 
     @Override

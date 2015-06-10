@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
 
@@ -28,13 +27,11 @@ public class ApplicationTest {
 
     @Before
     public void before() {
-        MockitoAnnotations.initMocks(this);
         args = new String[0];
     }
 
     @Test
     public void testRun() throws Exception {
-
         application.run(args);
         verify(cassandraOperation).performMigration();
     }
