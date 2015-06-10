@@ -61,5 +61,50 @@ dependencies:
 From the above yml file, it is important to note that the cassandra-migration jar only depends on Java and thus no other prerequisites are needed.
 
 
+* This is the main.yml file from tasks folder :
+
+```
+
+---
+# This role installs the Cassandra-Migration module
+
+- name: Create the Cassandra-Migration OS user group
+  group: name={{ cassandraMigrationGroup }}
+
+- name: Create the Cassandra-Migration OS user
+  user: name={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }}
+
+- name: Delete existing Cassandra-Migration files
+  sudo: yes
+  file: path={{ cassandraMigrationAppPath }} state=absent
+
+- name: Create Cassandra-Migration directories
+  file: path={{ item }} state=directory owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755 recurse=yes
+  with_items:
+    - "{{ cassandraMigrationAppPath }}"                   
+    - "{{ cassandraMigrationConfigPath }}"
+    - "{{ cassandraMigrationAppPath }}/lib"
+    - "{{ cassandraMigrationLogPath }}/"    
+
+- name: Deploy Cassandra-Migration package
+  copy: src=artifacts/{{ cassandraMigrationArtifactFileName }} dest={{ cassandraMigrationAppPath }}/lib owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
+
+- name: Create Cassandra-Migration configuration files
+  template: src={{ item }} dest={{ cassandraMigrationConfigPath }}/ owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }}
+  with_items:
+    - application.properties
+    - logback.xml
+    
+- name: Change Cassandra-Migration files ownership and permissions
+  file: path={{ cassandraMigrationAppPath }} recurse=yes owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=755
+
+
+# ADD STEP TO COPY migration.cql and rollback.cql FILES TO CUSTOM DIR HERE.
+
+
+- name: Start the Cassandra-Migration application
+  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-Migration.jar --migration.script="PATH TO SCRIPTS" '
+
+```
 
 
