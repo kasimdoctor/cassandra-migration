@@ -104,7 +104,7 @@ From the above yml file, it is important to note that the cassandra-migration ja
 
 
 - name: Start the Cassandra-Migration application
-  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-Migration.jar --migration.script="PATH TO SCRIPTS" '
+  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-Migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --rollback.script="PATH TO ROLLBACK SCRIPT" '
 
 ```
   
