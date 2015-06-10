@@ -108,7 +108,7 @@ From the above yml file, it is important to note that the cassandra-migration ja
 ```
 
 
-*Finally, copy the following application.properties file and put it under the templates or equivalent folder
+* Finally, copy the following application.properties file and put it under the templates or equivalent folder
 
 ```
 
