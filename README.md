@@ -108,3 +108,24 @@ From the above yml file, it is important to note that the cassandra-migration ja
 ```
 
 
+*Finally, copy the following application.properties file and put it under the templates or equivalent folder
+
+```
+
+[Cassandra]
+cassandra.cluster.ips={{ cassandra_cluster_ips }}
+cassandra.cluster.name={{ cassandra_cluster_name }}
+cassandra.datacenter.name={{ cassandra_datacenter_name }}
+
+[Logback]
+logging.config={{ cassandraMigrationConfigPath }}/logback.xml
+
+[Scripts]
+migration.script=
+rollback.script=
+
+```
+
+
+In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.
+
