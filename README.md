@@ -13,7 +13,28 @@ The application is an executable jar (a Spring boot app) which can be downloaded
 * In case the <b>rollback.cql</b> is missing or is itself error prone, the application fails and deployment fails.
 
 
-#### Ansible Template to deploy Cassandra Migration
+### 2 ways of using the tool: 
+
+#### 1. Running the jar directly
+
+* Since, it's an executable jar, you can run it directly from wherever you want. All you need to do is pass it the arguments it <i>absolutely</i> requires, in the `java -jar` command when you run it.
+
+* Here are the arguments that it requires:
+
+``` 
+cassandra.cluster.ips
+cassandra.cluster.name
+cassandra.datacenter.name
+logging.config                 # Optional
+migration.script
+rollback.script                # Optional
+```
+
+e.g. `java -jar lib/cassandra-Migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IP ADDRESSES>" cassandra.cluster.name="<CLUSTER NAME>" cassandra.datacenter.name="<DC NAME>" ` 
+
+
+</ br>
+#### 2. Ansible Template to deploy Cassandra Migration
 
 You will need a structure similar to the following if you use Ansible
 
