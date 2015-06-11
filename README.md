@@ -30,10 +30,10 @@ migration.script
 rollback.script                # Optional
 ```
 
-e.g. `java -jar lib/cassandra-Migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IP ADDRESSES>" cassandra.cluster.name="<CLUSTER NAME>" cassandra.datacenter.name="<DC NAME>" ` 
+e.g. `java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" cassandra.cluster.name="<CLUSTER NAME>" cassandra.datacenter.name="<DC NAME>" ` 
 
 
-</ br>
+
 #### 2. Ansible Template to deploy Cassandra Migration
 
 You will need a structure similar to the following if you use Ansible
@@ -108,8 +108,8 @@ From the above yml file, it is important to note that the cassandra-migration ja
     - "{{ cassandraMigrationAppPath }}/lib"
     - "{{ cassandraMigrationLogPath }}/"    
 
-- name: Deploy Cassandra-Migration package
-  copy: src=artifacts/{{ cassandraMigrationArtifactFileName }} dest={{ cassandraMigrationAppPath }}/lib owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
+- name: Get the jar from the  Nexus repository  
+  get_url: url={{ cassandraMigration_jar_url }} dest={{ cassandraMigrationAppPath }}/lib/{{ cassandraMigrationInstanceName }}.jar force="yes" owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
 
 - name: Create Cassandra-Migration configuration files
   template: src={{ item }} dest={{ cassandraMigrationConfigPath }}/ owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }}
@@ -125,7 +125,7 @@ From the above yml file, it is important to note that the cassandra-migration ja
 
 
 - name: Start the Cassandra-Migration application
-  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-Migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --rollback.script="PATH TO ROLLBACK SCRIPT" '
+  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --rollback.script="PATH TO ROLLBACK SCRIPT" '
 
 ```
   
