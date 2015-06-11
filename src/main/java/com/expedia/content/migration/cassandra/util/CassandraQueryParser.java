@@ -105,6 +105,9 @@ public class CassandraQueryParser {
             }
         }
 
+        if (queries.isEmpty()) {
+            LOGGER.warn("The file={} does not contain any executable Cassandra queries", resource.getFilename());
+        }
         return queries;
     }
 
