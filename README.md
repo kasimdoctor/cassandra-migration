@@ -128,7 +128,20 @@ From the above yml file, it is important to note that the cassandra-migration ja
   shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --rollback.script="PATH TO ROLLBACK SCRIPT" '
 
 ```
-  
+
+From the above yml file, please take note that you will have to specify these variables in <b>all.yml</b> or equivalent to download the jar from Nexus:
+
+```yml
+
+# Nexus Repositories
+nexus_repository_url: 'http://nexus.sb.karmalab.net/nexus'
+nexus_repository: 'cs-releases'
+
+# Cassandra Migration Tool
+cassandraMigration_jar_url: '{{ nexus_repository_url }}/service/local/artifact/maven/content?r={{ nexus_repository }}&g=com.expedia.content.migration&a=cassandra-migration&e=jar&v=LATEST '
+
+
+```  
   
 * Finally, copy the following application.properties file verbatim and put it under the templates or equivalent folder.  
   <b>N.B :</b> Make sure you have the variables used below i,e.(<i>cassandra_cluster_ips</i> etc.) defined somewhere in your                   project.
