@@ -9,8 +9,8 @@ The application is an executable jar (a Spring boot app) which can be downloaded
 
 * It expects 2 files viz. <b>migration.cql</b> and <b>rollback.cql</b> containing CQL queries to be executed on the Cassandra dB.
 * These files can reside in any folder on the server that you are deploying your applications to, and whose paths <b><i>must</i></b> be provided as command line arguments in your ansible   scripts, a template for which is described below.
-* The application first reads the <b>migration.cql</b> file, parses it removing any comments and executes the queries inside this file. If something should fail due to incorrect query syntax or a Cassandra timeout issue etc., the application then looks for the <b>rollback.cql</b> file as specified by the comand line path and executes the provided rollback operations.
-* In case the <b>rollback.cql</b> is missing or is itself error prone, the application fails and deployment fails.
+* The application first reads the <b>migration.cql</b> file, parses it removing any comments and executes the queries inside this file. If something should fail due to incorrect query syntax or a Cassandra timeout issue etc., the application then looks for the <b>rollback.cql</b> file as specified by the comand line path, executes the provided rollback operations and then fails signaling that migration has indeed failed.
+* In case the <b>rollback.cql</b> is missing or is itself error prone, the application fails right away and deployment fails.
 
 
 ### 2 ways of using the tool: 
@@ -165,7 +165,7 @@ rollback.script=
 
 **In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.**  
 
-
+#### Further Reading
 **Ansible for Dummies :**
 
 * [Creating Ansible Roles](http://www.azavea.com/blogs/labs/2014/10/creating-ansible-roles-from-scratch-part-1/)
