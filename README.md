@@ -1,6 +1,10 @@
 ### Cassandra Migration
 
-A Spring application that automates the Cassandra IPU process.
+A Spring application that automates the Cassandra IPU process.  
+
+###### Jenkins Status
+- Develop Pipeline: [![Build Status](http://jenkins.karmalab.net/jenkins/job/Cassandra-Migration.DEV_LANE.build/badge/icon)](http://jenkins.karmalab.net/jenkins/job/Cassandra-Migration.DEV_LANE.build/)
+
 ___
 
 ### Usage
