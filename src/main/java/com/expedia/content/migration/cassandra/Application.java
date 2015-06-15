@@ -3,6 +3,7 @@ package com.expedia.content.migration.cassandra;
 import com.expedia.content.migration.cassandra.exceptions.MigrationUnsuccessfulException;
 import com.expedia.content.migration.cassandra.operations.CassandraOperation;
 import com.expedia.content.migration.cassandra.operations.ResultType;
+import com.expedia.content.migration.cassandra.util.PokeLogger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +32,14 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     @Override
     public void run(String... args) throws Exception {
-        LOGGER.info("Starting the Cassandra Sitesup Operation.");
+        PokeLogger.info("Cassandra Migration", "Starting the Cassandra Sitesup Operation.");
 
         try {
             if (cassandraOperation.performMigration() == ResultType.FAILURE) {
                 result = cassandraOperation.performRollback();
                 throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
+            } else {
+                PokeLogger.info("Cassandra Migration Success", "Migration Operation successfully completed");
             }
 
         } finally {

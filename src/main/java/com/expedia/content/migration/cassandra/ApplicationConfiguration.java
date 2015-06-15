@@ -1,8 +1,11 @@
 package com.expedia.content.migration.cassandra;
 
+import javax.annotation.PostConstruct;
+
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
+import com.expedia.cs.poke.client.Poke;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +23,15 @@ public class ApplicationConfiguration {
     @Value("${cassandra.datacenter.name}")
     private String dataCenter;
 
+    @Value("${pokeEnabled}")
+    private String enabled;
+
+    @Value("${pokeTo}")
+    private String pokeTo;
+
+    @Value("${pokeUrl}")
+    private String pokeUrl;
+
     @Bean
     public Cluster cassandraCluster() {
         return Cluster.builder().addContactPoints(ips).withClusterName(clusterName).withLoadBalancingPolicy(new DCAwareRoundRobinPolicy(dataCenter))
@@ -29,6 +41,11 @@ public class ApplicationConfiguration {
     @Bean
     public Session cassandraLodgingDirectorySession(Cluster cluster) {
         return cluster.connect();
+    }
+
+    @PostConstruct
+    public void initializePoke() {
+        Poke.init(enabled, pokeUrl, pokeTo);
     }
 
 }

@@ -48,7 +48,7 @@ public class CassandraDao {
 
             }
         } catch (Exception ex) {
-            LOGGER.error("Exception encountered while performing operation of type={}", operationType, ex);
+            PokeLogger.error("Migration Error", String.format("Exception encountered while performing operation of type={}", operationType), ex);
             result = ResultType.FAILURE;
         }
 
