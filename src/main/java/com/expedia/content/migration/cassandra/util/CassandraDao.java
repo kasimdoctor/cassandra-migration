@@ -32,7 +32,8 @@ public class CassandraDao {
 
         List<String> queriesToExecute = queries.getQueriesToExecute();
 
-        LOGGER.info("Starting execution of count={} queries for operation type={}.", queriesToExecute.size(), operationType);
+        PokeLogger.info(operationType.toString(),
+                String.format("Starting execution of count= %s queries for operation type= %s.", queriesToExecute.size(), operationType));
         ResultType result = ResultType.SUCCESS;
         try {
 
@@ -48,7 +49,8 @@ public class CassandraDao {
 
             }
         } catch (Exception ex) {
-            PokeLogger.error("Migration Error", String.format("Exception encountered while performing operation of type={}", operationType), ex);
+            PokeLogger.error("Error: " + operationType.toString(),
+                    String.format("Exception encountered while performing operation of type= %s", operationType), ex);
             result = ResultType.FAILURE;
         }
 
