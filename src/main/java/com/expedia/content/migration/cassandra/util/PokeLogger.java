@@ -4,6 +4,7 @@ import com.expedia.cs.poke.client.Poke;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Utility class that serves as a wrapper to log and poke at the same time.
@@ -12,11 +13,14 @@ public final class PokeLogger {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PokeLogger.class);
 
+    @Value("${hipchat.room}")
+    private static String hipchatRoomName;
+
     private PokeLogger() {
     }
 
     /**
-     * Logs an error with the given message and exception if any, while also sending a poke at the same time.
+     * Logs an error with the given message and exception if any, while also sending a poke to Hipchat and email at the same time.
      * 
      * @param subject the subject of the poke email
      * @param msg the message to log, also the message of the email sent
@@ -24,27 +28,28 @@ public final class PokeLogger {
      */
     public static void error(String subject, String msg, Exception ex) {
         LOGGER.error(msg, ex);
-        Poke.create().subject(subject).poke(msg, ex);
+        Poke.builder().email(subject).chat(hipchatRoomName).poke(msg, ex);
     }
 
     /**
-     * Logs an error with the given message while also sending a poke at the same time.
+     * Logs an error with the given message while also sending a poke to Hipchat and email at the same time.
      * 
      * @param subject the subject of the poke email
      * @param msg the message to log, also the message of the email sent
      */
     public static void error(String subject, String msg) {
         LOGGER.error(msg);
-        Poke.create().subject(subject).poke(msg);
+        Poke.builder().email(subject).chat(hipchatRoomName).poke(msg);
     }
 
     /**
-     * Logs an information with the given message while also sending a poke at the same time.
+     * Logs an information with the given message while also sending a poke to Hipchat and email at the same time.
+     * 
      * @param subject the subject of the poke email
      * @param msg the message to log, also the message of the email sent
      */
     public static void info(String subject, String msg) {
         LOGGER.info(msg);
-        Poke.create().subject(subject).poke(msg);
+        Poke.builder().email(subject).chat(hipchatRoomName).poke(msg);
     }
 }

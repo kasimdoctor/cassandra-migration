@@ -1,5 +1,8 @@
 package com.expedia.content.migration.cassandra;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.annotation.PostConstruct;
 
 import com.datastax.driver.core.Cluster;
@@ -44,8 +47,9 @@ public class ApplicationConfiguration {
     }
 
     @PostConstruct
-    public void initializePoke() {
-        Poke.init(enabled, pokeUrl, pokeTo);
+    public void initializePoke() throws UnknownHostException {
+        final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
+        Poke.init(Boolean.getBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
     }
 
 }

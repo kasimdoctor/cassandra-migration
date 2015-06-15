@@ -2,6 +2,9 @@ package com.expedia.content.migration.cassandra;
 
 import static org.mockito.Mockito.verify;
 
+import com.expedia.content.migration.cassandra.operations.CassandraOperation;
+import com.expedia.cs.poke.client.Poke;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
-
-import com.expedia.content.migration.cassandra.operations.CassandraOperation;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationTest {
@@ -27,6 +28,7 @@ public class ApplicationTest {
 
     @Before
     public void before() {
+        Poke.init("", "", "");
         args = new String[0];
     }
 

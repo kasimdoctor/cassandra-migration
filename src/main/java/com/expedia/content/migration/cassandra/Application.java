@@ -19,7 +19,8 @@ import org.springframework.context.ApplicationContextAware;
 public class Application implements CommandLineRunner, ApplicationContextAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
-
+    private static final String START_SUBJECT = "Cassandra Migration";
+    
     private ApplicationContext appContext;
     private ResultType result;
 
@@ -32,14 +33,14 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     @Override
     public void run(String... args) throws Exception {
-        PokeLogger.info("Cassandra Migration", "Starting the Cassandra Sitesup Operation.");
+        PokeLogger.info(START_SUBJECT, "Starting the Cassandra Migration Operation.");
 
         try {
             if (cassandraOperation.performMigration() == ResultType.FAILURE) {
                 result = cassandraOperation.performRollback();
                 throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
             } else {
-                PokeLogger.info("Cassandra Migration Success", "Migration Operation successfully completed");
+                PokeLogger.info("Success: " + START_SUBJECT, "Migration Operation successfully completed");
             }
 
         } finally {
