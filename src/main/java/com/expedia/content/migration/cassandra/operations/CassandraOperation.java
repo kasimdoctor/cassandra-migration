@@ -41,7 +41,7 @@ public class CassandraOperation {
      * @throws IOException
      */
     public ResultType performRollback() throws IOException {
-        PokeLogger.info(OperationType.ROLLBACK.toString(), "Performing rollback operation.");
+        PokeLogger.error(OperationType.ROLLBACK.toString(), "Performing rollback operation.");
 
         QueryCommand queries = queryParser.getQueryOperations(OperationType.ROLLBACK);
         return cassandraDao.executeQueryCommand(queries, OperationType.ROLLBACK);
