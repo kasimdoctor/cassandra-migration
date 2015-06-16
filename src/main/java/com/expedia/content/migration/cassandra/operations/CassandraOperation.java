@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CassandraOperation {
 
+    private PokeLogger pokeLogger = PokeLogger.INSTANCE;
+
     private CassandraQueryParser queryParser;
     private CassandraDao cassandraDao;
 
@@ -28,7 +30,7 @@ public class CassandraOperation {
      * @throws IOException
      */
     public ResultType performMigration() throws IOException {
-        PokeLogger.info(OperationType.MIGRATION.toString(), "Performing migration operation.");
+        pokeLogger.info(OperationType.MIGRATION.toString(), "Performing migration operation.");
 
         QueryCommand queries = queryParser.getQueryOperations(OperationType.MIGRATION);
         return cassandraDao.executeQueryCommand(queries, OperationType.MIGRATION);
@@ -41,7 +43,7 @@ public class CassandraOperation {
      * @throws IOException
      */
     public ResultType performRollback() throws IOException {
-        PokeLogger.info(OperationType.ROLLBACK.toString(), "Performing rollback operation.");
+        pokeLogger.info(OperationType.ROLLBACK.toString(), "Performing rollback operation.");
 
         QueryCommand queries = queryParser.getQueryOperations(OperationType.ROLLBACK);
         return cassandraDao.executeQueryCommand(queries, OperationType.ROLLBACK);

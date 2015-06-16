@@ -2,6 +2,7 @@ package com.expedia.content.migration.cassandra.util;
 
 import com.expedia.cs.poke.client.Poke;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,27 +10,30 @@ import org.springframework.beans.factory.annotation.Value;
 /**
  * Utility class that serves as a wrapper to log and poke at the same time.
  */
-public final class PokeLogger {
+public enum PokeLogger {
 
+    INSTANCE;
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(PokeLogger.class);
 
     @Value("${hipchat.room}")
-    private static String hipchatRoomName;
-
-    private PokeLogger() {
-    }
-
+    private String hipchatRoomName;
+    
     /**
      * Logs an error with the given message and exception if any, while also sending a poke to Hipchat and email at the same time.
      * 
      * @param subject the subject of the poke email
      * @param msg the message to log, also the message of the email sent
      * @param ex the exception as part of the error
+     * @param hipchatRoomName an optional room name
      */
-    public static void error(String subject, String msg, Exception ex) {
+    public void error(String subject, String msg, Exception ex) {
         LOGGER.error(msg, ex);
         Poke.builder().email(subject).poke(msg, ex);
-        Poke.builder().chat(hipchatRoomName).poke(msg, ex);
+
+        if (!StringUtils.isNotBlank(hipchatRoomName)) {
+            Poke.builder().chat(hipchatRoomName).poke(msg, ex);
+        }
     }
 
     /**
@@ -37,11 +41,15 @@ public final class PokeLogger {
      * 
      * @param subject the subject of the poke email
      * @param msg the message to log, also the message of the email sent
+     * @param hipchatRoomName an optional room name
      */
-    public static void error(String subject, String msg) {
+    public void error(String subject, String msg) {
         LOGGER.error(msg);
         Poke.builder().email(subject).poke(msg);
-        Poke.builder().chat(hipchatRoomName).poke(msg);
+
+        if (!StringUtils.isNotBlank(hipchatRoomName)) {
+            Poke.builder().chat(hipchatRoomName).poke(msg);
+        }
     }
 
     /**
@@ -49,10 +57,14 @@ public final class PokeLogger {
      * 
      * @param subject the subject of the poke email
      * @param msg the message to log, also the message of the email sent
+     * @param hipchatRoomName an optional room name
      */
-    public static void info(String subject, String msg) {
+    public void info(String subject, String msg) {
         LOGGER.info(msg);
         Poke.builder().email(subject).poke(msg);
-        Poke.builder().chat(hipchatRoomName).poke(msg);
+
+        if (StringUtils.isNotBlank(hipchatRoomName)) {
+            Poke.builder().chat(hipchatRoomName).poke(msg);
+        }
     }
 }
