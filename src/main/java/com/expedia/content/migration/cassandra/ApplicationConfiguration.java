@@ -10,6 +10,7 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
 import com.expedia.cs.poke.client.Poke;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,6 +36,9 @@ public class ApplicationConfiguration {
     @Value("${pokeUrl}")
     private String pokeUrl;
 
+    @Value("${hipchat.room}")
+    private String hipchatRoomName;
+
     @Bean
     public Cluster cassandraCluster() {
         return Cluster.builder().addContactPoints(ips).withClusterName(clusterName).withLoadBalancingPolicy(new DCAwareRoundRobinPolicy(dataCenter))
@@ -49,6 +53,11 @@ public class ApplicationConfiguration {
     @PostConstruct
     public void initializePoke() throws UnknownHostException {
         final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
-        Poke.init(Boolean.parseBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
+        if (StringUtils.isNotBlank(hipchatRoomName)) {
+            Poke.init(Boolean.parseBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME, hipchatRoomName);
+        } else {
+            Poke.init(Boolean.parseBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
+        }
+
     }
 }

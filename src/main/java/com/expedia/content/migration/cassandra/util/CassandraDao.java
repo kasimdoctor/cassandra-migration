@@ -21,7 +21,6 @@ public class CassandraDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CassandraDao.class);
 
-    private PokeLogger pokeLogger = PokeLogger.INSTANCE;
     private Session session;
 
     @Autowired
@@ -33,7 +32,7 @@ public class CassandraDao {
 
         List<String> queriesToExecute = queries.getQueriesToExecute();
 
-        pokeLogger.info(operationType.toString(),
+        PokeLogger.info(operationType.toString(),
                 String.format("Starting execution of count=%s queries for operation type= %s.", queriesToExecute.size(), operationType));
         ResultType result = ResultType.SUCCESS;
         try {
@@ -50,7 +49,7 @@ public class CassandraDao {
 
             }
         } catch (Exception ex) {
-            pokeLogger.error("ERROR: " + operationType.toString(),
+            PokeLogger.error("ERROR: " + operationType.toString(),
                     String.format("Exception encountered while performing operation of type=%s", operationType), ex);
             result = ResultType.FAILURE;
         }

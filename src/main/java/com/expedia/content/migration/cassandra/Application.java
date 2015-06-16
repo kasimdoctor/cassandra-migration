@@ -19,7 +19,6 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     private static final String MIGRATION = OperationType.MIGRATION.toString();
 
-    private PokeLogger pokeLogger = PokeLogger.INSTANCE;
     private ApplicationContext appContext;
     private ResultType result;
 
@@ -32,14 +31,14 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     @Override
     public void run(String... args) throws Exception {
-        pokeLogger.info(MIGRATION, "Starting the Cassandra Migration Operation.");
+        PokeLogger.info(MIGRATION, "Starting the Cassandra Migration Operation.");
 
         try {
             if (cassandraOperation.performMigration() == ResultType.FAILURE) {
                 result = cassandraOperation.performRollback();
                 throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
             } else {
-                pokeLogger.info("SUCCESS: " + MIGRATION, "Migration Operation successfully completed");
+                PokeLogger.info("SUCCESS: " + MIGRATION, "Migration Operation successfully completed");
             }
 
         } finally {
