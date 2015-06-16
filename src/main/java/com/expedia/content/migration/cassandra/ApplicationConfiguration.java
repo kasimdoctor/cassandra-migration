@@ -10,7 +10,6 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
 import com.expedia.cs.poke.client.Poke;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,11 +52,6 @@ public class ApplicationConfiguration {
     @PostConstruct
     public void initializePoke() throws UnknownHostException {
         final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
-        if (StringUtils.isNotBlank(hipchatRoomName)) {
-            Poke.init(Boolean.parseBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME, hipchatRoomName);
-        } else {
-            Poke.init(Boolean.parseBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
-        }
-
+        Poke.init(Boolean.parseBoolean(enabled), pokeUrl, INSTANCE_NAME, pokeTo, hipchatRoomName);
     }
 }
