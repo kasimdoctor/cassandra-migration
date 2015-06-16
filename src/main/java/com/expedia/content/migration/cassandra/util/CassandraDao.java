@@ -10,6 +10,7 @@ import com.datastax.driver.core.Statement;
 import com.expedia.content.migration.cassandra.operations.OperationType;
 import com.expedia.content.migration.cassandra.operations.QueryCommand;
 import com.expedia.content.migration.cassandra.operations.ResultType;
+import com.expedia.cs.poke.client.Poke;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +53,12 @@ public class CassandraDao {
             PokeLogger.error("ERROR: " + operationType.toString(),
                     String.format("Exception encountered while performing operation of type=%s", operationType), ex);
             result = ResultType.FAILURE;
+        }
+
+        if (result == ResultType.SUCCESS) {
+            StringBuilder message = new StringBuilder();
+            queriesToExecute.stream().forEach(x -> message.append(String.format("%32s%10s", x, "Success%n")));
+            Poke.builder().email("SUCCESS: MIGRATION").poke(message.toString());
         }
 
         return result;
