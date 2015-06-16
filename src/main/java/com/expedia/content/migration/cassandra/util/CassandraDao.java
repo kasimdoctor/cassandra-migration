@@ -57,7 +57,7 @@ public class CassandraDao {
 
         if (result == ResultType.SUCCESS) {
             StringBuilder message = new StringBuilder();
-            queriesToExecute.stream().forEach(x -> message.append(String.format("%32s%10s", x, "Success%n")));
+            queriesToExecute.stream().forEach(x -> message.append(String.format("%32s %10s", x, "Success\n")));
             Poke.builder().email("SUCCESS: MIGRATION").poke(message.toString());
         }
 
