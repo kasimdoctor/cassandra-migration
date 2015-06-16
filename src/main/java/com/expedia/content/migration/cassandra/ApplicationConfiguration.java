@@ -52,8 +52,8 @@ public class ApplicationConfiguration {
 
     @PostConstruct
     public void initializePoke() throws UnknownHostException {
-        LOGGER.info("################## " + pokeTo + "############### " + pokeUrl + "######### " + Boolean.getBoolean(enabled));
+        LOGGER.info("################## " + pokeTo + "############### " + pokeUrl + "######### " + Boolean.parseBoolean(enabled));
         final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
-        Poke.init(Boolean.getBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
+        Poke.init(Boolean.parseBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
     }
 }
