@@ -10,12 +10,16 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
 import com.expedia.cs.poke.client.Poke;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ApplicationConfiguration {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfiguration.class);
 
     @Value("${cassandra.cluster.name}")
     private String clusterName;
@@ -48,8 +52,8 @@ public class ApplicationConfiguration {
 
     @PostConstruct
     public void initializePoke() throws UnknownHostException {
+        LOGGER.info("################## " + pokeTo + "############### " + pokeUrl + "######### " + Boolean.getBoolean(enabled));
         final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
         Poke.init(Boolean.getBoolean(enabled), pokeUrl, pokeTo, INSTANCE_NAME);
     }
-
 }
