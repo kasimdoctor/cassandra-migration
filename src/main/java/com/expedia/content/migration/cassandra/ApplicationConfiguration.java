@@ -29,10 +29,10 @@ public class ApplicationConfiguration {
     @Value("${pokeEnabled}")
     private String enabled;
 
-    @Value("${pokeTo}")
+    @Value("${pokeEmail}")
     private String pokeTo;
 
-    @Value("${pokeUrl}")
+    @Value("${pokeServer}")
     private String pokeUrl;
 
     @Value("${hipchat.room}")
