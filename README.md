@@ -34,7 +34,11 @@ migration.script
 rollback.script                # Optional
 ```
 
-e.g. `java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" --cassandra.cluster.name="<CLUSTER NAME>" --cassandra.datacenter.name="<DC NAME>" ` 
+e.g.  
+
+```Java
+java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" --cassandra.cluster.name="<CLUSTER NAME>" --cassandra.datacenter.name="<DC NAME>"  
+```
 
 
 
