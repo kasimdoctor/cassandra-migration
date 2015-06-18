@@ -78,7 +78,7 @@ instanceName: "{{ cassandraMigrationInstanceName }}"
 
 ```
 
-* This is the main.yml file from the <b><i>meta</i></b> folder :
+* This is the main.yml file from under the <b><i>meta</i></b> folder :
 
 ```yml
 ---
