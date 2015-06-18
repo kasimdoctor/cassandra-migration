@@ -33,7 +33,7 @@ public class CassandraOperationTest {
 
     @Before
     public void before() {
-        Poke.init(false, "", "", "", "");
+        Poke.enabled(false);
         MockitoAnnotations.initMocks(this);
         cassandraOperation = new CassandraOperation(queryParser, cassandraDao);
         queries = new QueryCommand(Arrays.asList("use LodgingDirectory;"));

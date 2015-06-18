@@ -28,7 +28,7 @@ public class ApplicationTest {
 
     @Before
     public void before() {
-        Poke.init(false, "", "", "", "");
+        Poke.enabled(true);
         args = new String[0];
     }
 

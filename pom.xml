@@ -16,7 +16,7 @@
     <properties>
         <spring-boot.version>1.2.4.RELEASE</spring-boot.version>
         <cassandra-driver.version>2.1.6</cassandra-driver.version>
-        <poke.version>1.9.1</poke.version>
+        <poke.version>1.9.2-SNAPSHOT</poke.version>
         <start-class>com.expedia.content.migration.cassandra.Application</start-class>
     </properties>
 

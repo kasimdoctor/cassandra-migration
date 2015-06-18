@@ -49,7 +49,7 @@ public class CassandraDaoTest {
 
     @Before
     public void before() {
-        Poke.init(false, "", "", "", "");
+        Poke.enabled(false);
         when(queryCommand.getQueriesToExecute()).thenReturn(Arrays.asList("use Lodgingdirectory;", "drop table property;"));
         cassandraDao = new CassandraDao(session);
     }
