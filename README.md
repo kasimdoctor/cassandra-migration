@@ -9,7 +9,7 @@ ___
 
 ### Usage
 
-The application is an executable jar (a Spring boot app) which can be downloaded from Nexus and incorporated into your project.
+The application is an executable jar (Spring Boot) which can be downloaded from Nexus and incorporated into your project.
 
 * It expects 2 files viz. <b>migration.cql</b> and <b>rollback.cql</b> containing CQL queries to be executed on the Cassandra dB.
 * These files can reside in any folder on the server that you are deploying your applications to, and whose paths <b><i>must</i></b> be provided as command line arguments in your ansible scripts, a template for which is described below.
