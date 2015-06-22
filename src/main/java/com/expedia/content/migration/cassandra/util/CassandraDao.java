@@ -15,12 +15,16 @@ import com.expedia.cs.poke.client.Poke;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CassandraDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CassandraDao.class);
+
+    @Value("${migration.version}")
+    private String migrationVersion;
 
     private Session session;
 
@@ -61,13 +65,13 @@ public class CassandraDao {
             StringBuilder message = new StringBuilder();
             message.append("Executed queries are: \n\n");
             queriesToExecute.stream().forEach(x -> message.append(String.format("%s", ">  " + x.trim() + " \n")));
-            Poke.builder().email("SUCCESS: " + operationType.toString()).poke(message.toString());
+            Poke.builder().email("SUCCESS: " + operationType.toString() + " - " + migrationVersion).poke(message.toString());
 
         } else {
             StringBuilder message = new StringBuilder();
-            message.append("Queries that were not executed are: \n\n");
+            message.append("Queries that were NOT executed are: \n\n");
             queriesToExecute.stream().skip(successCount).forEach(x -> message.append(String.format("%s", ">  " + x.trim() + " \n")));
-            Poke.builder().email("FAILURE: " + operationType.toString()).poke(message.toString());
+            Poke.builder().email("FAILURE: " + operationType.toString() + " - " + migrationVersion).poke(message.toString());
         }
 
         return result;
