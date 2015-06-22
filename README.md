@@ -9,7 +9,7 @@ ___
 
 ### Usage
 
-The application is an executable jar (a Spring boot app) which can be downloaded from Nexus and incorporated into your project.
+The application is an executable jar (Spring Boot) which can be downloaded from Nexus and incorporated into your project.
 
 * It expects 2 files viz. <b>migration.cql</b> and <b>rollback.cql</b> containing CQL queries to be executed on the Cassandra dB.
 * These files can reside in any folder on the server that you are deploying your applications to, and whose paths <b><i>must</i></b> be provided as command line arguments in your ansible scripts, a template for which is described below.
@@ -34,7 +34,11 @@ migration.script
 rollback.script                # Optional
 ```
 
-e.g. `java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" cassandra.cluster.name="<CLUSTER NAME>" cassandra.datacenter.name="<DC NAME>" ` 
+e.g.
+
+```Java
+java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" --cassandra.cluster.name="<CLUSTER NAME>" --cassandra.datacenter.name="<DC NAME>"  
+```
 
 
 
@@ -74,7 +78,7 @@ instanceName: "{{ cassandraMigrationInstanceName }}"
 
 ```
 
-* This is the main.yml file from the <b><i>meta</i></b> folder :
+* This is the main.yml file from under the <b><i>meta</i></b> folder :
 
 ```yml
 ---
