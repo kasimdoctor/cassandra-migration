@@ -36,6 +36,7 @@ public class CassandraDao {
         PokeLogger.info(operationType.toString(),
                 String.format("Starting execution of count=%s queries for operation type= %s.", queriesToExecute.size(), operationType));
         ResultType result = ResultType.SUCCESS;
+        int successCount = 0;
         try {
 
             for (String query : queriesToExecute) {
@@ -47,6 +48,7 @@ public class CassandraDao {
                 ExecutionInfo execInfo = session.execute(statement).getExecutionInfo();
 
                 logQueryTrace(execInfo);
+                successCount++;
 
             }
         } catch (Exception ex) {
@@ -60,6 +62,12 @@ public class CassandraDao {
             message.append("Executed queries are: \n\n");
             queriesToExecute.stream().forEach(x -> message.append(String.format("%s", ">  " + x.trim() + " \n")));
             Poke.builder().email("SUCCESS: " + operationType.toString()).poke(message.toString());
+
+        } else {
+            StringBuilder message = new StringBuilder();
+            message.append("Queries that were not executed are: \n\n");
+            queriesToExecute.stream().skip(successCount).forEach(x -> message.append(String.format("%s", ">  " + x.trim() + " \n")));
+            Poke.builder().email("FAILURE: " + operationType.toString()).poke(message.toString());
         }
 
         return result;
