@@ -1,8 +1,14 @@
 package com.expedia.content.migration.cassandra;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import javax.annotation.PostConstruct;
+
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
+import com.expedia.cs.poke.client.Poke;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +26,18 @@ public class ApplicationConfiguration {
     @Value("${cassandra.datacenter.name}")
     private String dataCenter;
 
+    @Value("${pokeEnabled}")
+    private String enabled;
+
+    @Value("${pokeEmail}")
+    private String pokeTo;
+
+    @Value("${pokeServer}")
+    private String pokeUrl;
+
+    @Value("${hipchat.room}")
+    private String hipchatRoomName;
+
     @Bean
     public Cluster cassandraCluster() {
         return Cluster.builder().addContactPoints(ips).withClusterName(clusterName).withLoadBalancingPolicy(new DCAwareRoundRobinPolicy(dataCenter))
@@ -31,4 +49,9 @@ public class ApplicationConfiguration {
         return cluster.connect();
     }
 
+    @PostConstruct
+    public void initializePoke() throws UnknownHostException {
+        final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
+        Poke.init(Boolean.parseBoolean(enabled), pokeUrl, INSTANCE_NAME, pokeTo, hipchatRoomName);
+    }
 }
