@@ -46,7 +46,7 @@ java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" 
 
 You will need a structure similar to the following if you use Ansible
 
-![Ansible](/docs/ansible_structure.PNG? "Ansible structure")
+![Ansible](/docs/Ansible_structure_2.PNG? "Ansible structure")
 
 The above screenshot is taken from the <b>[3rd-Party-Content-Acquisition](https://ewegithub.sb.karmalab.net/ContentSystems/3rdparty-content-acquisition)</b> repository and it shows a structure that is used to deploy the cassandra-migration.jar  
 
@@ -119,6 +119,12 @@ From the above yml file, it is important to note that the cassandra-migration ja
 - name: Get the jar from the  Nexus repository  
   get_url: url={{ cassandraMigration_jar_url }} dest={{ cassandraMigrationAppPath }}/lib/{{ cassandraMigrationInstanceName }}.jar force="yes" owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
 
+- name: Copy the scripts
+  copy: src={{ item }} dest={{ cassandraMigrationAppPath }}/lib owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
+  with_items:
+    - migration.cql
+    - rollback.cql
+
 - name: Create Cassandra-Migration configuration files
   template: src={{ item }} dest={{ cassandraMigrationConfigPath }}/ owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }}
   with_items:
@@ -128,12 +134,8 @@ From the above yml file, it is important to note that the cassandra-migration ja
 - name: Change Cassandra-Migration files ownership and permissions
   file: path={{ cassandraMigrationAppPath }} recurse=yes owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=755
 
-
-# ADD STEP TO COPY migration.cql and rollback.cql FILES TO CUSTOM DIR HERE.
-
-
 - name: Start the Cassandra-Migration application
-  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --rollback.script="PATH TO ROLLBACK SCRIPT" '
+  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-migration.jar --migration.script="{{ cassandraMigrationAppPath }}/lib/migration.cql" --rollback.script="{{ cassandraMigrationAppPath }}/lib/rollback.cql" '
 
 ```
 
