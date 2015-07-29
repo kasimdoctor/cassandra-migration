@@ -57,7 +57,7 @@ public class CassandraDao {
             }
         } catch (Exception ex) {
             PokeLogger.error("ERROR: " + operationType.toString(),
-                    String.format("Exception encountered while performing operation of type=%s", operationType), ex);
+                    String.format("Exception encountered while executing query >  %s", queriesToExecute.get(successCount)), ex);
             result = ResultType.FAILURE;
         }
 

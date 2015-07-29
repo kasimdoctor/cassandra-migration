@@ -8,6 +8,7 @@ import com.expedia.content.migration.cassandra.util.PokeLogger;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +23,9 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
     private ApplicationContext appContext;
     private ResultType result;
 
+    @Value("${rollback.enabled}")
+    private String rollbackEnabled;
+
     @Autowired
     private CassandraOperation cassandraOperation;
 
@@ -35,10 +39,14 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
         try {
             if (cassandraOperation.performMigration() == ResultType.FAILURE) {
-                result = cassandraOperation.performRollback();
-                throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
+                if (Boolean.parseBoolean(rollbackEnabled)) {
+                    result = cassandraOperation.performRollback();
+                    throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
+                } else {
+                    throw new MigrationUnsuccessfulException("Migration process failed. No rollback performed since rollback is disabled.");
+                }
             } else {
-                PokeLogger.info("SUCCESS: " + MIGRATION, "Migration Operation successfully completed");
+                PokeLogger.info("SUCCESS: " + MIGRATION, "Migration Operation successfully completed.");
             }
 
         } finally {
