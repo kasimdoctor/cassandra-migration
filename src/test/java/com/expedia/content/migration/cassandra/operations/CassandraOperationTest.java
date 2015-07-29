@@ -10,7 +10,6 @@ import java.util.Arrays;
 
 import com.expedia.content.migration.cassandra.util.CassandraDao;
 import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
-import com.expedia.cs.poke.client.Poke;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +32,6 @@ public class CassandraOperationTest {
 
     @Before
     public void before() {
-        Poke.enabled(false);
         MockitoAnnotations.initMocks(this);
         cassandraOperation = new CassandraOperation(queryParser, cassandraDao);
         queries = new QueryCommand(Arrays.asList("use LodgingDirectory;"));

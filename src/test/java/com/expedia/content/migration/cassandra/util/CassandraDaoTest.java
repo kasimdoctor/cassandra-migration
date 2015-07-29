@@ -19,7 +19,6 @@ import com.datastax.driver.core.exceptions.InvalidQueryException;
 import com.expedia.content.migration.cassandra.operations.OperationType;
 import com.expedia.content.migration.cassandra.operations.QueryCommand;
 import com.expedia.content.migration.cassandra.operations.ResultType;
-import com.expedia.cs.poke.client.Poke;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,7 +48,6 @@ public class CassandraDaoTest {
 
     @Before
     public void before() {
-        Poke.enabled(false);
         when(queryCommand.getQueriesToExecute()).thenReturn(Arrays.asList("use Lodgingdirectory;", "drop table property;"));
         cassandraDao = new CassandraDao(session);
     }

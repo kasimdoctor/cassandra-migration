@@ -24,8 +24,8 @@ public final class PokeLogger {
      */
     public static void error(String subject, String msg, Exception ex) {
         LOGGER.error(msg, ex);
-        Poke.builder().email(subject).poke(msg, ex);
-        Poke.builder().hipchat().poke(msg, ex);
+        Poke.build().email(subject).poke(msg, ex);
+        Poke.build().hipchat().poke(msg, ex);
     }
 
     /**
@@ -36,8 +36,8 @@ public final class PokeLogger {
      */
     public static void error(String subject, String msg) {
         LOGGER.error(msg);
-        Poke.builder().email(subject).poke(msg);
-        Poke.builder().hipchat().poke(msg);
+        Poke.build().email(subject).poke(msg);
+        Poke.build().hipchat().poke(msg);
     }
 
     /**
@@ -48,6 +48,6 @@ public final class PokeLogger {
      */
     public static void info(String subject, String msg) {
         LOGGER.info(msg);
-        Poke.builder().hipchat().poke(msg);
+        Poke.build().hipchat().poke(msg);
     }
 }
