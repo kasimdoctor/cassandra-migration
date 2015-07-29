@@ -7,6 +7,7 @@ import com.datastax.driver.core.QueryTrace;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.exceptions.TraceRetrievalException;
 import com.expedia.content.migration.cassandra.operations.OperationType;
 import com.expedia.content.migration.cassandra.operations.QueryCommand;
 import com.expedia.content.migration.cassandra.operations.ResultType;
@@ -78,8 +79,13 @@ public class CassandraDao {
     }
 
     private void logQueryTrace(ExecutionInfo execInfo) {
-        QueryTrace trace = execInfo.getQueryTrace();
-        LOGGER.info("Cassandra query with trace UUID={} started at startTime={} with requestType={}", trace.getTraceId(), trace.getStartedAt(),
-                trace.getRequestType());
+        try {
+            QueryTrace trace = execInfo.getQueryTrace();
+            LOGGER.info("Cassandra query with trace UUID={} started at startTime={} with requestType={}", trace.getTraceId(), trace.getStartedAt(),
+                    trace.getRequestType());
+        } catch (TraceRetrievalException e) {
+            LOGGER.info("Query trace for this query could not be retrieved.");
+        }
+
     }
 }
