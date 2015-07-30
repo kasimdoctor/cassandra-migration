@@ -1,10 +1,4 @@
-## In Development
-
-#### New Features
-- [CSPB-528160](https://jira/jira/browse/CSPB-528160) Add Poke support for email and hipchat.
-
-#### Improvements
-- Add support for version of migration being performed.   
+## In Development  
 
 
 ---  
@@ -12,3 +6,14 @@
 
 #### First Release
 
+---
+
+### v0.2 - 2015-07-30
+
+#### New Features  
+
+* [CSPB-528160](https://jira/jira/browse/CSPB-528160) Poke support for email and hipchat with Poke 2.0.3.
+* Better and more descriptive reporting, now you can know the exact CQL query that failed via Poke.
+* Support for version of migration being performed.
+* Upgrade of Spring-Boot to 1.2.5
+* Fixed bug in which application would throw an exception and fail, if it could not get a query trace.
