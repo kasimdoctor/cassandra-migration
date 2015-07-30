@@ -48,6 +48,17 @@ public final class PokeLogger {
      */
     public static void info(String subject, String msg) {
         LOGGER.info(msg);
+        Poke.build().email(subject).poke(msg);
+        Poke.build().hipchat().poke(msg);
+    }
+
+    /**
+     * Logs an information with the given message while also sending a poke to Hipchat.
+     * 
+     * @param msg
+     */
+    public static void info(String msg) {
+        LOGGER.info(msg);
         Poke.build().hipchat().poke(msg);
     }
 }

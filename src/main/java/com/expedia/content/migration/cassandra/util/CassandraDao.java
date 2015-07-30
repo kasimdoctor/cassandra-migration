@@ -38,8 +38,7 @@ public class CassandraDao {
 
         List<String> queriesToExecute = queries.getQueriesToExecute();
 
-        PokeLogger.info(operationType.toString(),
-                String.format("Starting execution of count=%s queries for operation type= %s.", queriesToExecute.size(), operationType));
+        PokeLogger.info(String.format("Starting execution of count=%s queries for operation type= %s.", queriesToExecute.size(), operationType));
         ResultType result = ResultType.SUCCESS;
         int successCount = 0;
         try {
