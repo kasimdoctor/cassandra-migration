@@ -28,7 +28,7 @@ public class CassandraOperation {
      * @throws IOException
      */
     public ResultType performMigration() throws IOException {
-        PokeLogger.info(OperationType.MIGRATION.toString(), "Performing migration operation.");
+        PokeLogger.info("Performing migration operation.");
 
         QueryCommand queries = queryParser.getQueryOperations(OperationType.MIGRATION);
         return cassandraDao.executeQueryCommand(queries, OperationType.MIGRATION);

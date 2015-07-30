@@ -2,7 +2,6 @@ package com.expedia.content.migration.cassandra;
 
 import com.expedia.content.migration.cassandra.exceptions.MigrationUnsuccessfulException;
 import com.expedia.content.migration.cassandra.operations.CassandraOperation;
-import com.expedia.content.migration.cassandra.operations.OperationType;
 import com.expedia.content.migration.cassandra.operations.ResultType;
 import com.expedia.content.migration.cassandra.util.PokeLogger;
 
@@ -17,8 +16,6 @@ import org.springframework.context.ApplicationContextAware;
 @SpringBootApplication
 public class Application implements CommandLineRunner, ApplicationContextAware {
 
-    private static final String MIGRATION = OperationType.MIGRATION.toString();
-
     private ApplicationContext appContext;
     private ResultType result;
 
@@ -31,14 +28,21 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     @Override
     public void run(String... args) throws Exception {
-        PokeLogger.info(MIGRATION, "Starting the Cassandra Migration Operation.");
+        PokeLogger.info("Starting the Cassandra Migration Tool.");
 
         try {
             if (cassandraOperation.performMigration() == ResultType.FAILURE) {
                 result = cassandraOperation.performRollback();
+
+                if (result == ResultType.SUCCESS) {
+                    PokeLogger.info("Rollback operation successfully completed.");
+                } else {
+                    PokeLogger.info("Rollback failed.");
+                }
+
                 throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
             } else {
-                PokeLogger.info("SUCCESS: " + MIGRATION, "Migration Operation successfully completed");
+                PokeLogger.info("Migration operation successfully completed.");
             }
 
         } finally {

@@ -51,7 +51,7 @@ public class ApplicationConfiguration {
 
     @PostConstruct
     public void initializePoke() throws UnknownHostException {
-        final String INSTANCE_NAME = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
-        Poke.init(Boolean.parseBoolean(enabled), pokeUrl, INSTANCE_NAME, pokeTo, hipchatRoomName);
+        final String user = System.getProperty("user.name") + "@" + InetAddress.getLocalHost().getHostName();
+        Poke.config(Boolean.parseBoolean(enabled), pokeUrl, user, "Cassandra-Migration-Tool").email(pokeTo).hipchat(hipchatRoomName);
     }
 }

@@ -7,6 +7,7 @@ import com.datastax.driver.core.QueryTrace;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.exceptions.TraceRetrievalException;
 import com.expedia.content.migration.cassandra.operations.OperationType;
 import com.expedia.content.migration.cassandra.operations.QueryCommand;
 import com.expedia.content.migration.cassandra.operations.ResultType;
@@ -37,8 +38,7 @@ public class CassandraDao {
 
         List<String> queriesToExecute = queries.getQueriesToExecute();
 
-        PokeLogger.info(operationType.toString(),
-                String.format("Starting execution of count=%s queries for operation type= %s.", queriesToExecute.size(), operationType));
+        PokeLogger.info(String.format("Starting execution of count=%s queries for operation type= %s.", queriesToExecute.size(), operationType));
         ResultType result = ResultType.SUCCESS;
         int successCount = 0;
         try {
@@ -57,7 +57,7 @@ public class CassandraDao {
             }
         } catch (Exception ex) {
             PokeLogger.error("ERROR: " + operationType.toString(),
-                    String.format("Exception encountered while performing operation of type=%s", operationType), ex);
+                    String.format("Exception encountered while executing query >  %s", queriesToExecute.get(successCount)), ex);
             result = ResultType.FAILURE;
         }
 
@@ -65,21 +65,26 @@ public class CassandraDao {
             StringBuilder message = new StringBuilder();
             message.append("Executed queries are: \n\n");
             queriesToExecute.stream().forEach(x -> message.append(String.format("%s", ">  " + x.trim() + " \n")));
-            Poke.builder().email("SUCCESS: " + operationType.toString() + " - " + migrationVersion).poke(message.toString());
+            Poke.build().email("SUCCESS: " + operationType.toString() + " - " + migrationVersion).poke(message.toString());
 
         } else {
             StringBuilder message = new StringBuilder();
             message.append("Queries that were NOT executed are: \n\n");
             queriesToExecute.stream().skip(successCount).forEach(x -> message.append(String.format("%s", ">  " + x.trim() + " \n")));
-            Poke.builder().email("FAILURE: " + operationType.toString() + " - " + migrationVersion).poke(message.toString());
+            Poke.build().email("FAILURE: " + operationType.toString() + " - " + migrationVersion).poke(message.toString());
         }
 
         return result;
     }
 
     private void logQueryTrace(ExecutionInfo execInfo) {
-        QueryTrace trace = execInfo.getQueryTrace();
-        LOGGER.info("Cassandra query with trace UUID={} started at startTime={} with requestType={}", trace.getTraceId(), trace.getStartedAt(),
-                trace.getRequestType());
+        try {
+            QueryTrace trace = execInfo.getQueryTrace();
+            LOGGER.info("Cassandra query with trace UUID={} started at startTime={} with requestType={}", trace.getTraceId(), trace.getStartedAt(),
+                    trace.getRequestType());
+        } catch (TraceRetrievalException e) {
+            LOGGER.info("Query trace for this query could not be retrieved.");
+        }
+
     }
 }
