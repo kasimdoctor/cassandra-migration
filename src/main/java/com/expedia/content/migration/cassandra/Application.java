@@ -7,7 +7,6 @@ import com.expedia.content.migration.cassandra.util.PokeLogger;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,9 +18,6 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
     private ApplicationContext appContext;
     private ResultType result;
-
-    @Value("${rollback.enabled}")
-    private String rollbackEnabled;
 
     @Autowired
     private CassandraOperation cassandraOperation;
@@ -36,19 +32,15 @@ public class Application implements CommandLineRunner, ApplicationContextAware {
 
         try {
             if (cassandraOperation.performMigration() == ResultType.FAILURE) {
-                if (Boolean.parseBoolean(rollbackEnabled)) {
-                    result = cassandraOperation.performRollback();
+                result = cassandraOperation.performRollback();
 
-                    if (result == ResultType.SUCCESS) {
-                        PokeLogger.info("Rollback operation successfully completed.");
-                    } else {
-                        PokeLogger.info("Rollback failed.");
-                    }
-
-                    throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
+                if (result == ResultType.SUCCESS) {
+                    PokeLogger.info("Rollback operation successfully completed.");
                 } else {
-                    throw new MigrationUnsuccessfulException("Migration process failed. No rollback performed since rollback is disabled.");
+                    PokeLogger.info("Rollback failed.");
                 }
+
+                throw new MigrationUnsuccessfulException("Migration process failed. Rollback operation performed.");
             } else {
                 PokeLogger.info("Migration operation successfully completed.");
             }
