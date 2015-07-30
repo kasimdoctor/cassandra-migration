@@ -4,16 +4,13 @@ import java.io.IOException;
 
 import com.expedia.content.migration.cassandra.util.CassandraDao;
 import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
+import com.expedia.content.migration.cassandra.util.PokeLogger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CassandraOperation {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CassandraOperation.class);
 
     private CassandraQueryParser queryParser;
     private CassandraDao cassandraDao;
@@ -31,7 +28,7 @@ public class CassandraOperation {
      * @throws IOException
      */
     public ResultType performMigration() throws IOException {
-        LOGGER.info("Performing migration operation.");
+        PokeLogger.info("Performing migration operation.");
 
         QueryCommand queries = queryParser.getQueryOperations(OperationType.MIGRATION);
         return cassandraDao.executeQueryCommand(queries, OperationType.MIGRATION);
@@ -44,7 +41,7 @@ public class CassandraOperation {
      * @throws IOException
      */
     public ResultType performRollback() throws IOException {
-        LOGGER.info("Performing rollback operation.");
+        PokeLogger.error(OperationType.ROLLBACK.toString(), "Performing rollback operation.");
 
         QueryCommand queries = queryParser.getQueryOperations(OperationType.ROLLBACK);
         return cassandraDao.executeQueryCommand(queries, OperationType.ROLLBACK);

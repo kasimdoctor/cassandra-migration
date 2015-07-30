@@ -2,6 +2,8 @@ package com.expedia.content.migration.cassandra;
 
 import static org.mockito.Mockito.verify;
 
+import com.expedia.content.migration.cassandra.operations.CassandraOperation;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.context.ApplicationContext;
-
-import com.expedia.content.migration.cassandra.operations.CassandraOperation;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicationTest {

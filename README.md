@@ -1,16 +1,20 @@
 ### Cassandra Migration
 
-A Spring application that automates the Cassandra IPU process.
+A Spring application that automates the Cassandra IPU process.  
+
+###### Jenkins Status
+- Develop Pipeline: [![Build Status](http://jenkins.karmalab.net/jenkins/job/Cassandra-Migration.DEV_LANE.build/badge/icon)](http://jenkins.karmalab.net/jenkins/job/Cassandra-Migration.DEV_LANE.build/)
+
 ___
 
 ### Usage
 
-The application is an executable jar (a Spring boot app) which can be downloaded from Nexus and incorporated into your project.
+The application is an executable jar (Spring Boot) which can be downloaded from Nexus and incorporated into your project.
 
 * It expects 2 files viz. <b>migration.cql</b> and <b>rollback.cql</b> containing CQL queries to be executed on the Cassandra dB.
-* These files can reside in any folder on the server that you are deploying your applications to, and whose paths <b><i>must</i></b> be provided as command line arguments in your ansible   scripts, a template for which is described below.
-* The application first reads the <b>migration.cql</b> file, parses it removing any comments and executes the queries inside this file. If something should fail due to incorrect query syntax or a Cassandra timeout issue etc., the application then looks for the <b>rollback.cql</b> file as specified by the comand line path and executes the provided rollback operations.
-* In case the <b>rollback.cql</b> is missing or is itself error prone, the application fails and deployment fails.
+* These files can reside in any folder on the server that you are deploying your applications to, and whose paths <b><i>must</i></b> be provided as command line arguments in your ansible scripts, a template for which is described below.
+* The application first reads the <b>migration.cql</b> file, parses it removing any comments and executes the queries inside this file. If something should fail due to incorrect query syntax or a Cassandra timeout issue etc., the application then looks for the <b>rollback.cql</b> file as specified by the comand line path, executes the provided rollback operations and then fails signaling that migration has indeed failed.
+* In case the <b>rollback.cql</b> is missing or is itself error prone, the application fails right away and deployment fails.
 
 
 ### 2 ways of using the tool: 
@@ -30,7 +34,11 @@ migration.script
 rollback.script                # Optional
 ```
 
-e.g. `java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" cassandra.cluster.name="<CLUSTER NAME>" cassandra.datacenter.name="<DC NAME>" ` 
+e.g.
+
+```Java
+java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --cassandra.cluster.ips="<A COMMA SEPARATED LIST OF CASSANDRA IPs>" --cassandra.cluster.name="<CLUSTER NAME>" --cassandra.datacenter.name="<DC NAME>"  
+```
 
 
 
@@ -38,7 +46,7 @@ e.g. `java -jar cassandra-migration.jar --migration.script="PATH TO MIGRATION SC
 
 You will need a structure similar to the following if you use Ansible
 
-![Ansible](/docs/ansible_structure.PNG? "Ansible structure")
+![Ansible](/docs/Ansible_structure_2.PNG? "Ansible structure")
 
 The above screenshot is taken from the <b>[3rd-Party-Content-Acquisition](https://ewegithub.sb.karmalab.net/ContentSystems/3rdparty-content-acquisition)</b> repository and it shows a structure that is used to deploy the cassandra-migration.jar  
 
@@ -70,7 +78,7 @@ instanceName: "{{ cassandraMigrationInstanceName }}"
 
 ```
 
-* This is the main.yml file from the <b><i>meta</i></b> folder :
+* This is the main.yml file from under the <b><i>meta</i></b> folder :
 
 ```yml
 ---
@@ -111,6 +119,12 @@ From the above yml file, it is important to note that the cassandra-migration ja
 - name: Get the jar from the  Nexus repository  
   get_url: url={{ cassandraMigration_jar_url }} dest={{ cassandraMigrationAppPath }}/lib/{{ cassandraMigrationInstanceName }}.jar force="yes" owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
 
+- name: Copy the scripts
+  copy: src={{ item }} dest={{ cassandraMigrationAppPath }}/lib owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=0755
+  with_items:
+    - migration.cql
+    - rollback.cql
+
 - name: Create Cassandra-Migration configuration files
   template: src={{ item }} dest={{ cassandraMigrationConfigPath }}/ owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }}
   with_items:
@@ -120,12 +134,8 @@ From the above yml file, it is important to note that the cassandra-migration ja
 - name: Change Cassandra-Migration files ownership and permissions
   file: path={{ cassandraMigrationAppPath }} recurse=yes owner={{ cassandraMigrationUser }} group={{ cassandraMigrationGroup }} mode=755
 
-
-# ADD STEP TO COPY migration.cql and rollback.cql FILES TO CUSTOM DIR HERE.
-
-
 - name: Start the Cassandra-Migration application
-  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-migration.jar --migration.script="PATH TO MIGRATION SCRIPT" --rollback.script="PATH TO ROLLBACK SCRIPT" '
+  shell: su {{ user }} -c 'cd {{ cassandraMigrationAppPath }}; {{ javaHome }}/bin/java -jar lib/cassandra-migration.jar --migration.script="{{ cassandraMigrationAppPath }}/lib/migration.cql" --rollback.script="{{ cassandraMigrationAppPath }}/lib/rollback.cql" '
 
 ```
 
@@ -165,7 +175,7 @@ rollback.script=
 
 **In the end, all you need to do is create a playbook which deploys the above created role and have it run as the first step in deploying your application.**  
 
-
+#### Further Reading
 **Ansible for Dummies :**
 
 * [Creating Ansible Roles](http://www.azavea.com/blogs/labs/2014/10/creating-ansible-roles-from-scratch-part-1/)

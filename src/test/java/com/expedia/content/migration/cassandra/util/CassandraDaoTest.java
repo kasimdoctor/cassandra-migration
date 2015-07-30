@@ -9,12 +9,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import com.datastax.driver.core.ExecutionInfo;
 import com.datastax.driver.core.QueryTrace;
 import com.datastax.driver.core.ResultSet;
@@ -25,6 +19,12 @@ import com.datastax.driver.core.exceptions.InvalidQueryException;
 import com.expedia.content.migration.cassandra.operations.OperationType;
 import com.expedia.content.migration.cassandra.operations.QueryCommand;
 import com.expedia.content.migration.cassandra.operations.ResultType;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CassandraDaoTest {

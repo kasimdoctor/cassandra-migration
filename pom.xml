@@ -10,11 +10,12 @@
 
     <groupId>com.expedia.content.migration</groupId>
     <artifactId>cassandra-migration</artifactId>
-    <version>0.1.1</version>
+    <version>0.2</version>
 
     <properties>
-        <spring-boot.version>1.2.4.RELEASE</spring-boot.version>
+        <spring-boot.version>1.2.5.RELEASE</spring-boot.version>
         <cassandra-driver.version>2.1.6</cassandra-driver.version>
+        <poke.version>2.0.3</poke.version>
         <start-class>com.expedia.content.migration.cassandra.Application</start-class>
     </properties>
 
@@ -95,6 +96,16 @@
                 <version>${cassandra-driver.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.expedia.cs.poke</groupId>
+                <artifactId>poke-client</artifactId>
+                <version>${poke.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.3.2</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
@@ -125,6 +136,10 @@
             <artifactId>cassandra-driver-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.expedia.cs.poke</groupId>
+            <artifactId>poke-client</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
@@ -135,6 +150,10 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
