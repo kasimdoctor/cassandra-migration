@@ -4,7 +4,7 @@ A Spring application that automates the Cassandra IPU process.
 
 ###### Jenkins Status
 - Develop Pipeline: [![Build Status](http://jenkins.karmalab.net/jenkins/job/Cassandra-Migration.DEV_LANE.build/badge/icon)](http://jenkins.karmalab.net/jenkins/job/Cassandra-Migration.DEV_LANE.build/)  
-- * [**Latest version from nexus**] (http://nexus.sb.karmalab.net/nexus/content/repositories/cs-releases/com/expedia/content/migration/cassandra-migration/) 
+- [**Latest version from nexus**] (http://nexus.sb.karmalab.net/nexus/content/repositories/cs-releases/com/expedia/content/migration/cassandra-migration/) 
 ___
 
 ### Usage
