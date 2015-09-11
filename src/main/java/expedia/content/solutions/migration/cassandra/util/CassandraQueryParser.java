@@ -44,8 +44,9 @@ public class CassandraQueryParser {
     }
 
     /**
-     * Parses the specific CQL file based on the {@code OperationType} and returns a {@code QueryCommand} object
-     * that contains the queries to be executed
+     * Parses the specific CQL file based on the {@code OperationType} and
+     * returns a {@code QueryCommand} object that contains the queries to be
+     * executed
      * 
      * @param type the type of operation to be performed
      * @return a {@code QueryCommand} that has the parsed queries
