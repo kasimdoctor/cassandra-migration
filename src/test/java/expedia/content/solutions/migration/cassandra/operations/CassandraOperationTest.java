@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.operations;
+package expedia.content.solutions.migration.cassandra.operations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.never;
@@ -8,13 +8,13 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.Arrays;
 
-import com.expedia.content.migration.cassandra.util.CassandraDao;
-import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import expedia.content.solutions.migration.cassandra.util.CassandraDao;
+import expedia.content.solutions.migration.cassandra.util.CassandraQueryParser;
 
 public class CassandraOperationTest {
 

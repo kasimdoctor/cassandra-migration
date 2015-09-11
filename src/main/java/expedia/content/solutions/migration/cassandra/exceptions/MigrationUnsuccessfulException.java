@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.exceptions;
+package expedia.content.solutions.migration.cassandra.exceptions;
 
 public class MigrationUnsuccessfulException extends RuntimeException {
 

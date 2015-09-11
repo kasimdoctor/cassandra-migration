@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.util;
+package expedia.content.solutions.migration.cassandra.util;
 
 import java.util.List;
 
@@ -8,10 +8,11 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.exceptions.TraceRetrievalException;
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
-import com.expedia.content.migration.cassandra.operations.ResultType;
 import com.expedia.cs.poke.client.Poke;
+
+import expedia.content.solutions.migration.cassandra.operations.OperationType;
+import expedia.content.solutions.migration.cassandra.operations.QueryCommand;
+import expedia.content.solutions.migration.cassandra.operations.ResultType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

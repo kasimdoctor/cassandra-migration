@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.util;
+package expedia.content.solutions.migration.cassandra.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -8,9 +8,6 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +15,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+
+import expedia.content.solutions.migration.cassandra.operations.OperationType;
+import expedia.content.solutions.migration.cassandra.operations.QueryCommand;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CassandraQueryParserTest {

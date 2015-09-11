@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.util;
+package expedia.content.solutions.migration.cassandra.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -9,6 +9,12 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import com.datastax.driver.core.ExecutionInfo;
 import com.datastax.driver.core.QueryTrace;
 import com.datastax.driver.core.ResultSet;
@@ -16,15 +22,10 @@ import com.datastax.driver.core.Session;
 import com.datastax.driver.core.SimpleStatement;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.core.exceptions.InvalidQueryException;
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
-import com.expedia.content.migration.cassandra.operations.ResultType;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import expedia.content.solutions.migration.cassandra.operations.OperationType;
+import expedia.content.solutions.migration.cassandra.operations.QueryCommand;
+import expedia.content.solutions.migration.cassandra.operations.ResultType;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CassandraDaoTest {
