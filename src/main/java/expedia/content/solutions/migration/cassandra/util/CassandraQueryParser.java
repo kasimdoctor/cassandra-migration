@@ -1,13 +1,10 @@
-package com.expedia.content.migration.cassandra.util;
+package expedia.content.solutions.migration.cassandra.util;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import com.expedia.content.migration.cassandra.operations.OperationType;
-import com.expedia.content.migration.cassandra.operations.QueryCommand;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+
+import expedia.content.solutions.migration.cassandra.operations.OperationType;
+import expedia.content.solutions.migration.cassandra.operations.QueryCommand;
 
 /**
  * A parser for CQL files.
@@ -44,8 +44,9 @@ public class CassandraQueryParser {
     }
 
     /**
-     * Parses the specific CQL file based on the {@code OperationType} and returns a {@code QueryCommand} object
-     * that contains the queries to be executed
+     * Parses the specific CQL file based on the {@code OperationType} and
+     * returns a {@code QueryCommand} object that contains the queries to be
+     * executed
      * 
      * @param type the type of operation to be performed
      * @return a {@code QueryCommand} that has the parsed queries

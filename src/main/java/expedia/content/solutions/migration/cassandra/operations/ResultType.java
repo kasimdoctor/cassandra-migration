@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.operations;
+package expedia.content.solutions.migration.cassandra.operations;
 
 import org.springframework.boot.ExitCodeGenerator;
 

@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra.util;
+package expedia.content.solutions.migration.cassandra.util;
 
 import com.expedia.cs.poke.client.Poke;
 
