@@ -1,7 +1,7 @@
-###### Jenkins Status
-- Develop Pipeline: [![Build Status](https://jenkins.karmalab.net/jenkins/view/CS/view/PLATFORM/view/CASSANDRA-MIGRATION/view/DEVELOP/job/Cassandra-Migration.DEV_LANE.build/badge/icon)](http://cheljenkins100/jenkins/job/Cassandra-Migration.DEV_LANE.build/)  
-- [**Latest version from nexus**] (http://nexus.sb.karmalab.net/nexus/content/repositories/cs-releases/com/expedia/content/migration/cassandra-migration/)  
+Please refer to our [wiki](https://ewegithub.sb.karmalab.net/ContentSolutions/cassandra-migration/wiki) to learn more about **metrics**.
 
-___
+[JENKINS PIPELINES](https://jenkins.karmalab.net/jenkins/view/CS/view/PLATFORM/view/CASSANDRA-MIGRATION/)
+
+[![Build Status](https://jenkins.karmalab.net/jenkins/view/CS/view/PLATFORM/view/CASSANDRA-MIGRATION/view/DEVELOP/job/CS.METRICS-ASPECTS.BUILD_DEV/badge/icon)](https://jenkins.karmalab.net/jenkins/view/CS/view/PLATFORM/view/METRICS/view/DEVELOP/)
 
 
