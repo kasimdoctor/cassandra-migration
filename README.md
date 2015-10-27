@@ -1,4 +1,4 @@
-Please refer to the [wiki](https://ewegithub.sb.karmalab.net/ContentSolutions/cassandra-migration/wiki) to learn more about **cassandra-migration** or contact us at vortex@expedia.com.
+Please refer to the [wiki](https://ewegithub.sb.karmalab.net/ContentSolutions/cassandra-migration/wiki) to learn more about **cassandra-migration** or contact us at vortex@expedia.com
 
 [JENKINS PIPELINES](https://jenkins.karmalab.net/jenkins/view/CS/view/PLATFORM/view/CASSANDRA-MIGRATION/)
 
