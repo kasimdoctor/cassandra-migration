@@ -9,7 +9,7 @@
 
     <groupId>expedia.content.solutions.migration</groupId>
     <artifactId>cassandra-migration</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
 
     <properties>
         <spring-boot.version>1.2.5.RELEASE</spring-boot.version>
