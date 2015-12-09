@@ -1,9 +1,9 @@
-package com.expedia.content.migration.cassandra;
+package expedia.content.solutions.migration.cassandra;
 
-import com.expedia.content.migration.cassandra.exceptions.MigrationUnsuccessfulException;
-import com.expedia.content.migration.cassandra.operations.CassandraOperation;
-import com.expedia.content.migration.cassandra.operations.ResultType;
-import com.expedia.content.migration.cassandra.util.PokeLogger;
+import expedia.content.solutions.migration.cassandra.exceptions.MigrationUnsuccessfulException;
+import expedia.content.solutions.migration.cassandra.operations.CassandraOperation;
+import expedia.content.solutions.migration.cassandra.operations.ResultType;
+import expedia.content.solutions.migration.cassandra.util.PokeLogger;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;

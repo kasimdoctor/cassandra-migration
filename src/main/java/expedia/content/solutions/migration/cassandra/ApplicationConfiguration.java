@@ -1,4 +1,4 @@
-package com.expedia.content.migration.cassandra;
+package expedia.content.solutions.migration.cassandra;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

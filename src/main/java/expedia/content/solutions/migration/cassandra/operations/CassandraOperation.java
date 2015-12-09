@@ -1,13 +1,13 @@
-package com.expedia.content.migration.cassandra.operations;
+package expedia.content.solutions.migration.cassandra.operations;
 
 import java.io.IOException;
 
-import com.expedia.content.migration.cassandra.util.CassandraDao;
-import com.expedia.content.migration.cassandra.util.CassandraQueryParser;
-import com.expedia.content.migration.cassandra.util.PokeLogger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import expedia.content.solutions.migration.cassandra.util.CassandraDao;
+import expedia.content.solutions.migration.cassandra.util.CassandraQueryParser;
+import expedia.content.solutions.migration.cassandra.util.PokeLogger;
 
 @Component
 public class CassandraOperation {
