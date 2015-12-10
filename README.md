@@ -7,7 +7,7 @@ Please refer to our [wiki](https://ewegithub.sb.karmalab.net/ContentSolutions/ca
 <dependency>
     <groupId>expedia.content.solutions.migration</groupId>
     <artifactId>cassandra-migration</artifactId>
-    <version>${LATEST_VERSION}</version>
+    <version>0.4</version>
 </dependency>
 ```
 
