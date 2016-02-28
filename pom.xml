@@ -12,7 +12,7 @@
     <version>0.5-SNAPSHOT</version>
 
     <properties>
-        <cassandra-driver.version>2.1.7</cassandra-driver.version>
+        <cassandra-driver.version>2.1.9</cassandra-driver.version>
         <poke.version>2.0.3</poke.version>
         <start-class>expedia.content.solutions.migration.cassandra.Application</start-class>
     </properties>
