@@ -9,13 +9,12 @@
 
     <groupId>expedia.content.solutions.migration</groupId>
     <artifactId>cassandra-migration</artifactId>
-    <version>0.4</version>
+    <version>0.5</version>
 
     <properties>
-        <spring-boot.version>1.2.5.RELEASE</spring-boot.version>
-        <cassandra-driver.version>2.1.7</cassandra-driver.version>
+        <cassandra-driver.version>2.1.9</cassandra-driver.version>
         <poke.version>2.0.3</poke.version>
-        <start-class>com.expedia.content.migration.cassandra.Application</start-class>
+        <start-class>expedia.content.solutions.migration.cassandra.Application</start-class>
     </properties>
 
     <build>

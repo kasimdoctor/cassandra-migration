@@ -5,14 +5,14 @@ import java.net.UnknownHostException;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
 import com.datastax.driver.core.policies.DCAwareRoundRobinPolicy;
 import com.expedia.cs.poke.client.Poke;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ApplicationConfiguration {
@@ -40,12 +40,12 @@ public class ApplicationConfiguration {
 
     @Bean
     public Cluster cassandraCluster() {
-        return Cluster.builder().addContactPoints(ips).withClusterName(clusterName).withLoadBalancingPolicy(new DCAwareRoundRobinPolicy(dataCenter))
-                .build();
+        return Cluster.builder().addContactPoints(ips).withClusterName(clusterName)
+                .withLoadBalancingPolicy(DCAwareRoundRobinPolicy.builder().withLocalDc(dataCenter).build()).build();
     }
 
     @Bean
-    public Session cassandraLodgingDirectorySession(Cluster cluster) {
+    public Session cassandraSession(Cluster cluster) {
         return cluster.connect();
     }
 
