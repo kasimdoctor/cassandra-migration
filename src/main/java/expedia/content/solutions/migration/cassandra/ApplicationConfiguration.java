@@ -40,8 +40,8 @@ public class ApplicationConfiguration {
 
     @Bean
     public Cluster cassandraCluster() {
-        return Cluster.builder().addContactPoints(ips).withClusterName(clusterName).withLoadBalancingPolicy(new DCAwareRoundRobinPolicy(dataCenter))
-                .build();
+        return Cluster.builder().addContactPoints(ips).withClusterName(clusterName)
+                .withLoadBalancingPolicy(DCAwareRoundRobinPolicy.builder().withLocalDc(dataCenter).build()).build();
     }
 
     @Bean
